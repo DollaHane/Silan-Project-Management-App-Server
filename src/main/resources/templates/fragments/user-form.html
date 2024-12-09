@@ -1,0 +1,27 @@
+<div th:fragment="userForm" class="w-[50vw] flex mx-auto mb-10">
+
+  <div class="flex w-full flex-col">
+    <h1 class="mb-5 border border-transparent border-b-black">Create User:</h1>
+    <form id="userForm" name="userForm" onsubmit="submitForm(event)" class="grid grid-cols-2 gap-5">
+
+      <div>
+        <input type="text" id="lastName" placeholder="First Name" name="lastName" required
+          class="mb-5 w-full h-8 pl-2 shadow-md rounded-md">
+        <input type="text" id="firstName" placeholder="Last Name" name="firstName" required
+          class="mb-5 w-full h-8 pl-2 shadow-md rounded-md">
+      </div>
+      <div>
+        <input type="number" id="age" placeholder="Age" name="age" required
+          class="mb-5 w-full h-8 pl-2 shadow-md rounded-md">
+        <input type="text" id="occupation" placeholder="Occupation" name="occupation" required
+          class="mb-5 w-full h-8 pl-2 shadow-md rounded-md">
+      </div>
+
+      <button type="submit" value="Submit"
+        class="flex w-20 h-8 bg-zinc-800 text-zinc-50 hover:bg-zinc-500 items-center justify-center rounded-md shadow-md">Submit</button>
+    </form>
+  </div>
+
+  <script th:src="@{/js/userScript.js}"></script>
+
+</div>

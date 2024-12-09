@@ -1,0 +1,21 @@
+<div th:fragment="userList" class="w-[50vw] flex flex-col mx-auto">
+
+  <div class="flex w-full flex-col">
+    <h1 class="mb-5 border border-transparent border-t-black pt-5">User List:</h1>
+
+    <div id="sheetDiv"></div>
+    <div id="usersDiv"
+      class="w-full flex flex-row mx-auto mb-3 justify-between border border-transparent border-b-black bg-zinc-200">
+      <p class="italic w-full">First Name</p>
+      <p class="italic w-full">Last Name</p>
+      <p class="italic w-full">Age</p>
+      <p class="italic w-full">Occupation</p>
+      <div class="w-full max-w-[50px]"></div>
+    </div>
+
+  </div>
+
+
+  <script th:src="@{/js/userScript.js}"></script>
+
+</div>

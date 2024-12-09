@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Silan Project Manager</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script th:src="@{/js/userScript.js}"></script>
+</head>
+
+<body>
+
+  <h1 class="w-full flex my-10 text-lg items-center justify-center">HOME PAGE</h1>
+  <div th:replace="~{fragments/user-form :: userForm}" ></div>
+  <div th:replace="~{fragments/user-list :: userList}" ></div>
+
+
+</body>
+
+
+</html>
