@@ -1,14 +1,16 @@
 package com.silan.projectmanager.Model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.github.f4b6a3.ulid.Ulid;
+import com.github.f4b6a3.ulid.UlidCreator;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -19,14 +21,15 @@ import jakarta.persistence.Table;
 @Table(name = "\"tool\"")
 public class Tool {
 
+  Ulid ulid = UlidCreator.getUlid();
+
   // _________________________________________________
   // Model
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  private Ulid id = ulid;
 
   @Column
-  private long projectParentId;
+  private Ulid projectParentId;
 
   @Column
   private String toolNumber;
@@ -37,9 +40,20 @@ public class Tool {
   @Column
   private String description;
 
+  @Column
+  private LocalDateTime createdAt;
+
+  @Column
+  private LocalDateTime updatedAt;
+
   // Child Relations
   @OneToMany(mappedBy = "tool", cascade = CascadeType.ALL)
+  @JsonManagedReference
   private List<Task> tasks;
+
+  @OneToMany(mappedBy = "tool", cascade = CascadeType.ALL)
+  @JsonManagedReference
+  private List<Note> notes;
 
   // Parent Relations
   @ManyToOne
@@ -50,19 +64,19 @@ public class Tool {
   // _________________________________________________
   // Getters & Setters
 
-  public long getId() {
+  public Ulid getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Ulid id) {
     this.id = id;
   }
 
-  public long getProjectParentId() {
+  public Ulid getProjectParentId() {
     return projectParentId;
   }
 
-  public void setProjectParentId(long projectParentId) {
+  public void setProjectParentId(Ulid projectParentId) {
     this.projectParentId = projectParentId;
   }
 
@@ -88,6 +102,22 @@ public class Tool {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+    public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
   // 'tasks' (Child Relation)

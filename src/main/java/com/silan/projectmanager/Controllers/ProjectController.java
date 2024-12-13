@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.silan.projectmanager.Services.ProjectService;
+import com.github.f4b6a3.ulid.Ulid;
 import com.silan.projectmanager.Model.Project;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class ProjectController {
   }
 
   @GetMapping(value = "/api/get-project/{id}")
-  public Optional<Project> getProjectById(@PathVariable("id") long id) {
+  public Optional<Project> getProjectById(@PathVariable("id") Ulid id) {
     return projectService.getProjectById(id);
   }
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.silan.projectmanager.Repo.ProjectRepo;
+import com.github.f4b6a3.ulid.Ulid;
 import com.silan.projectmanager.Model.Project;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class ProjectService {
     return projectRepo.findAll();
   }
 
-  public Optional<Project> getProjectById(long id) {
+  public Optional<Project> getProjectById(Ulid id) {
     return projectRepo.findById(id);
   }
 
@@ -27,7 +28,7 @@ public class ProjectService {
     return projectRepo.save(project);
   }
 
-  public Project updateProject(long id, Project projects) {
+  public Project updateProject(Ulid id, Project projects) {
     Project updatedProject = projectRepo.findById(id).get();
     updatedProject.setTitle(projects.getTitle());
     updatedProject.setJobNumber(projects.getJobNumber());
@@ -36,7 +37,7 @@ public class ProjectService {
     return projectRepo.save(updatedProject);
   }
 
-  public void deleteProject(long id) {
+  public void deleteProject(Ulid id) {
     Project deletedProject = projectRepo.findById(id).get();
     if (deletedProject == null) {
       throw new IllegalArgumentException("Invalid Project ID");

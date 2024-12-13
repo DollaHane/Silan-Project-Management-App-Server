@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 // import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.f4b6a3.ulid.Ulid;
 import com.silan.projectmanager.Model.Users;
 import com.silan.projectmanager.Services.UserService;
 
@@ -35,7 +36,7 @@ public class UserController {
 
   @CrossOrigin(origins = "http://localhost:4200")
   @PutMapping(value = "/api/update-users/{id}")
-  public ResponseEntity<Users> updateUser(long id, @RequestBody Users users) {
+  public ResponseEntity<Users> updateUser(Ulid id, @RequestBody Users users) {
     Users updatedUser = userService.updateUser(id, users);
     return ResponseEntity.ok(updatedUser);
   }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 // import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.f4b6a3.ulid.Ulid;
 import com.silan.projectmanager.Model.Tool;
 import com.silan.projectmanager.Services.ToolService;
 
@@ -29,7 +30,7 @@ public class ToolController {
   }
 
   @GetMapping(value = "/api/get-tool/{id}")
-  public Optional<Tool> getToolById(@PathVariable("id") long id) {
+  public Optional<Tool> getToolById(@PathVariable("id") Ulid id) {
     return toolService.getToolById(id);
   }
 
@@ -42,13 +43,13 @@ public class ToolController {
 
   @CrossOrigin(origins = "http://localhost:4200")
   @PutMapping(value = "/api/update-tool/{id}")
-  public ResponseEntity<Tool> updateTool(@PathVariable("id") long id, @RequestBody Tool tools) {
+  public ResponseEntity<Tool> updateTool(@PathVariable("id") Ulid id, @RequestBody Tool tools) {
     Tool updatedTool = toolService.updateTool(id, tools);
     return ResponseEntity.ok(updatedTool);
   }
 
   @DeleteMapping(value = "/api/del-tool/{id}")
-  public ResponseEntity<String> deleteTool(@PathVariable("id") long id) {
+  public ResponseEntity<String> deleteTool(@PathVariable("id") Ulid id) {
     toolService.deleteTool(id);
     return ResponseEntity.ok("Tool deleted");
   }

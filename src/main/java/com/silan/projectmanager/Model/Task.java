@@ -1,27 +1,32 @@
 package com.silan.projectmanager.Model;
-
+import com.silan.projectmanager.Types.Status.STATUS;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.github.f4b6a3.ulid.Ulid;
+import com.github.f4b6a3.ulid.UlidCreator;
+import com.silan.projectmanager.Types.Priority.PRIORITY;
 import java.time.LocalDateTime;
-// import java.util.List;
-// import jakarta.persistence.CascadeType;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-// import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "\"task\"")
 public class Task {
 
+  Ulid ulid = UlidCreator.getUlid();
+
   // _________________________________________________
   // Model
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  private Ulid id = ulid;
 
   @Column
   private String title;
@@ -30,27 +35,46 @@ public class Task {
   private String responsible;
 
   @Column
-  private String status;
+  private int progress;
+
+  @Column
+  private LocalDateTime startDate;
 
   @Column
   private LocalDateTime targetDate;
 
   @Column
-  private boolean flag = false;
+  private LocalDateTime createdAt;
+
+  @Column
+  private LocalDateTime updatedAt;
+
+  @Column
+  private STATUS status;
+
+
+  @Column
+  private PRIORITY priority;
+
+  // Child Relations
+  @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+  @JsonManagedReference
+  private List<Note> notes;
 
   // Parent Relations
   @ManyToOne
-  @JoinColumn(name = "tool_id")
+  @JoinColumn(name = "tool_id", nullable = false)
+  @JsonBackReference
   private Tool tool;
 
   // _________________________________________________
   // Getters & Setters
 
-  public long getId() {
+  public Ulid getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Ulid id) {
     this.id = id;
   }
 
@@ -70,11 +94,11 @@ public class Task {
     this.responsible = responsible;
   }
 
-  public String getStatus() {
+  public STATUS getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(STATUS status) {
     this.status = status;
   }
 
@@ -86,12 +110,37 @@ public class Task {
     this.targetDate = targetDate;
   }
 
-  public boolean getFlag() {
-    return flag;
+  public PRIORITY getPriority() {
+    return priority;
   }
 
-  public void setFlag(boolean flag) {
-    this.flag = flag;
+  public void setPriority(PRIORITY priority) {
+    this.priority = priority;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
+  // 'note' (Child Relation)
+  public List<Note> getNotes() {
+    return notes;
+  }
+
+  public void setNotes(List<Note> notes) {
+    this.notes = notes;
   }
 
   // 'tool' (Parent Relation)
