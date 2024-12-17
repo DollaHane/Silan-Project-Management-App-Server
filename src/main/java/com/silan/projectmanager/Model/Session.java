@@ -29,7 +29,7 @@ public class Session {
 
   @Column
   @NotBlank(message = "User ID is required")
-  private String userId;
+  private Ulid userId;
 
   @Column
   @NotBlank(message = "Name is required")
@@ -64,11 +64,11 @@ public class Session {
     this.id = id;
   }
 
-  public String getUserId() {
+  public Ulid getUserId() {
     return userId;
   }
 
-  public void setUserId(String userId) {
+  public void setUserId(Ulid userId) {
     this.userId = userId;
   }
 

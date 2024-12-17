@@ -3,7 +3,6 @@ package com.silan.projectmanager.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.github.f4b6a3.ulid.Ulid;
 import com.silan.projectmanager.Model.Users;
 import com.silan.projectmanager.Repo.UserRepo;
@@ -13,7 +12,6 @@ import jakarta.validation.Valid;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 
 @Service
 public class UserService {
@@ -21,10 +19,7 @@ public class UserService {
   @Autowired
   private UserRepo userRepo;
 
-  public List<Users> getAllUsers() {
-    return userRepo.findAll();
-  }
-
+  // REGISTER
   public Users registerUser(@Valid Users users) {
 
     LocalDateTime currentDate = LocalDateTime.now(ZoneId.of("+02:00"));
