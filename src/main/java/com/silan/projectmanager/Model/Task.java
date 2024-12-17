@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "\"task\"")
@@ -29,18 +30,26 @@ public class Task {
   private Ulid id = ulid;
 
   @Column
+  @NotBlank(message = "Title is required")
+  @Min(value = 3, message = "Title must be longer than 3 characters")
+  @Max(value = 199, message = "Title must be shorter than 199 characters")
   private String title;
 
   @Column
+  @NotBlank(message = "Responsible is required")
+  @Min(value = 3, message = "Responsible must be longer than 3 characters")
+  @Max(value = 199, message = "Responsible must be shorter than 199 characters")
   private String responsible;
 
   @Column
   private int progress;
 
   @Column
+  @NotBlank
   private LocalDateTime startDate;
 
   @Column
+  @NotBlank
   private LocalDateTime targetDate;
 
   @Column

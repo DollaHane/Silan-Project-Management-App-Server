@@ -10,6 +10,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
@@ -26,18 +28,24 @@ public class Session {
   private Ulid id = ulid;
 
   @Column
+  @NotBlank(message = "User ID is required")
   private String userId;
 
   @Column
+  @NotBlank(message = "Name is required")
   private String name;
 
   @Column
+  @Email
+  @NotBlank(message = "Email is required")
   private String email;
 
-  @Column 
+  @Column
+  @NotBlank(message = "Token is required")
   private String token;
 
   @Column
+  @NotBlank(message = "Expiration Date is required")
   private LocalDateTime expiration;
 
   // Child Relations
@@ -105,7 +113,4 @@ public class Session {
     this.users = users;
   }
 
-
-
-  
 }

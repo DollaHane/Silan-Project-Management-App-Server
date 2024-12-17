@@ -12,31 +12,44 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "\"users\"")
 public class Users {
 
   Ulid ulid = UlidCreator.getUlid();
-  
-  // Model 
+
+  // Model
   @Id
+  @NotBlank
   private Ulid id = ulid;
 
   @Column
+  @NotBlank(message = "Name is required")
+  @Max(value = 199, message = "Name must be shorter than 199 characters")
   private String name;
 
-  @Column 
+  @Column
+  @Email
+  @NotBlank(message = "Email is required")
+  @Max(value = 199, message = "Email must be shorter than 199 characters")
   private String email;
 
   @Column
+  @Email
+  @Max(value = 199, message = "Email must be shorter than 199 characters")
   private String emailVerified;
 
-  @Column 
+  @Column
+  @NotBlank(message = "Password is required")
+  @Min(value = 8, message = "Password must be longer than 8 characters")
+  @Max(value = 199, message = "Password must be shorter than 199 characters")
+  @Pattern(regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).*$", message = "Password must contain at least one uppercase letter, one number, and one special character")
   private String password;
 
-  @Column 
+  @Column
+  @NotBlank(message = "Admin privilages required")
   private Boolean isAdmin;
 
   @Column
@@ -50,8 +63,6 @@ public class Users {
   @JoinColumn(name = "session_id", nullable = false)
   @JsonBackReference
   private Session session;
-
-
 
   // Getters & Setters
   public Ulid getId() {

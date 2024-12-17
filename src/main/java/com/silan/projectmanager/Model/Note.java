@@ -12,19 +12,23 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "\"note\"")
 public class Note {
 
   Ulid ulid = UlidCreator.getUlid();
-  
+
   // ___________________________________
   // Model
   @Id
   private Ulid id = ulid;
 
   @Column
+  @NotBlank(message = "Note text is required")
+  @Min(value = 3, message = "Note text must be longer than 3 characters")
+  @Max(value = 199, message = "Note text must be shorter than 199 characters")
   private String text;
 
   @Column
@@ -96,6 +100,5 @@ public class Note {
   public void setTool(Tool tool) {
     this.tool = tool;
   }
-
 
 }
