@@ -27,8 +27,7 @@ public class Note {
 
   @Column
   @NotBlank(message = "Note text is required")
-  @Min(value = 3, message = "Note text must be longer than 3 characters")
-  @Max(value = 199, message = "Note text must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "Note text must be between 3 and 199 characters")
   private String text;
 
   @Column

@@ -1,4 +1,5 @@
 package com.silan.projectmanager.Model;
+
 import com.silan.projectmanager.Types.Status.STATUS;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -31,14 +32,12 @@ public class Task {
 
   @Column
   @NotBlank(message = "Title is required")
-  @Min(value = 3, message = "Title must be longer than 3 characters")
-  @Max(value = 199, message = "Title must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "Title must be between 3 and 199 characters")
   private String title;
 
   @Column
-  @NotBlank(message = "Responsible is required")
-  @Min(value = 3, message = "Responsible must be longer than 3 characters")
-  @Max(value = 199, message = "Responsible must be shorter than 199 characters")
+  @NotBlank(message = "Responsible person name is required")
+  @Size(min = 3, max = 199, message = "Responsible person name must be between 3 and 199 characters")
   private String responsible;
 
   @Column
@@ -60,7 +59,6 @@ public class Task {
 
   @Column
   private STATUS status;
-
 
   @Column
   private PRIORITY priority;

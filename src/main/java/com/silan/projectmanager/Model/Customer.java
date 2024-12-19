@@ -12,8 +12,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.persistence.CascadeType;
 import jakarta.validation.constraints.*;
 
@@ -23,58 +21,50 @@ public class Customer {
 
   Ulid ulid = UlidCreator.getUlid();
 
-  // _______________________________
-  // Model
+  // ____________________________________
+  // Models
 
   @Id
   private Ulid id = ulid;
 
   @Column
   @NotBlank(message = "Company name is required")
-  @Min(value = 3, message = "Company name must be longer than 3 characters")
-  @Max(value = 199, message = "Company name must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "Company name must be between 3 and 199 characters")
   private String name;
 
   @Column
   @NotBlank(message = "Address Line is required")
-  @Min(value = 3, message = "Address Line must be longer than 3 characters")
-  @Max(value = 199, message = "Address Line must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "Address Line must be between 3 and 199 characters")
   private String addressLine1;
 
   @Column
   @NotBlank(message = "Address Line is required")
-  @Min(value = 3, message = "Address Line must be longer than 3 characters")
-  @Max(value = 199, message = "Address Line must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "Address Line must be between 3 and 199 characters")
   private String addressLine2;
 
   @Column
   @NotBlank(message = "Address Line is required")
-  @Min(value = 3, message = "Address Line must be longer than 3 characters")
-  @Max(value = 199, message = "Address Line must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "Address Line must be between 3 and 199 characters")
   private String addressLine3;
 
   @Column
   @NotBlank(message = "Contact person is required")
-  @Min(value = 3, message = "Contact person must be longer than 3 characters")
-  @Max(value = 199, message = "Contact person must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "Contact person must be between 3 and 199 characters")
   private String contactPerson;
 
   @Column
-  @NotBlank(message = "Contact number is required")
-  @Min(value = 3, message = "Contact number must be longer than 3 characters")
-  @Max(value = 199, message = "Contact number must be shorter than 199 characters")
+  @Min(value = 3, message = "Contact number must be at least 3")
+  @Max(value = 199, message = "Contact number must not exceed 199")
   private int contactNumber;
 
   @Column
   @NotBlank(message = "Contact email is required")
-  @Min(value = 3, message = "Contact email must be longer than 3 characters")
-  @Max(value = 199, message = "Contact email must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "Contact email must be between 3 and 199 characters")
   private String contactEmail;
 
   @Column
   @NotBlank(message = "Admin email is required")
-  @Min(value = 3, message = "Admin email must be longer than 3 characters")
-  @Max(value = 199, message = "Admin email must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "Admin email must be between 3 and 199 characters")
   private String adminEmail;
 
   @Column

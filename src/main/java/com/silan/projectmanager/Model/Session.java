@@ -1,7 +1,6 @@
 package com.silan.projectmanager.Model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.github.f4b6a3.ulid.Ulid;
 import com.github.f4b6a3.ulid.UlidCreator;
@@ -49,9 +48,9 @@ public class Session {
   private LocalDateTime expiration;
 
   // Child Relations
-  @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
+  @OneToOne(mappedBy = "session", cascade = CascadeType.ALL)
   @JsonManagedReference
-  private List<Users> users;
+  private Users users;
 
   // ____________________________________
   // Getters & Setters
@@ -105,11 +104,11 @@ public class Session {
   }
 
   // 'user' (Child Relation)
-  public List<Users> getUsers() {
+  public Users getUsers() {
     return users;
   }
 
-  public void setUsers(List<Users> users) {
+  public void setUsers(Users users) {
     this.users = users;
   }
 

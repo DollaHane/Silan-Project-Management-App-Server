@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface SessionRepo extends JpaRepository<Session, Ulid> {
 
-  @Query("SELECT * FROM session WHERE email = ?1")
+  @Query("SELECT u FROM Session u WHERE u.email = ?1")
   Optional<Session> findSessionByEmail(String email);
 
 }

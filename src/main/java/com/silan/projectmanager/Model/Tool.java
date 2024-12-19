@@ -16,9 +16,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "\"tool\"")
@@ -37,22 +36,18 @@ public class Tool {
 
   @Column
   @NotBlank(message = "Tool number is required")
-  @Min(value = 3, message = "Tool number must be longer than 3 characters")
-  @Max(value = 199, message = "Tool number must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "Tool number must be between 3 and 199 characters")
   private String toolNumber;
 
   @Column
   @NotBlank(message = "Title is required")
-  @Min(value = 3, message = "Title must be longer than 3 characters")
-  @Max(value = 199, message = "Title must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "Title must be between 3 and 199 characters")
   private String title;
 
   @Column
   @NotBlank(message = "Description is required")
-  @Min(value = 3, message = "Description must be longer than 3 characters")
-  @Max(value = 199, message = "Description must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "Description must be between 3 and 199 characters")
   private String description;
-
 
   @Column
   private LocalDateTime createdAt;
@@ -118,7 +113,7 @@ public class Tool {
     this.description = description;
   }
 
-    public LocalDateTime getCreatedAt() {
+  public LocalDateTime getCreatedAt() {
     return createdAt;
   }
 

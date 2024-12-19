@@ -31,26 +31,22 @@ public class Project {
 
   @Column
   @NotBlank(message = "Title is required")
-  @Min(value = 3, message = "Title must be longer than 3 characters")
-  @Max(value = 199, message = "Title must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "Title must be between 3 and 199 characters")
   private String title;
 
   @Column
   @NotBlank(message = "PO Number is required")
-  @Min(value = 3, message = "PO Number must be longer than 3 characters")
-  @Max(value = 199, message = "PO Number must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "PO Number must be between 3 and 199 characters")
   private String poNumber;
 
   @Column
   @NotBlank(message = "Job number is required")
-  @Min(value = 3, message = "Job number must be longer than 3 characters")
-  @Max(value = 199, message = "Job number must be shorter than 199 characters")
+  @Size(min = 3, max = 199, message = "Job number must be between 3 and 199 characters")
   private String jobNumber;
 
   @Column
-  @NotBlank(message = "Project Value is required")
-  @Min(value = 3, message = "Project Value must be longer than 3 characters")
-  @Max(value = 199, message = "Project Value must be shorter than 199 characters")
+  @Min(value = 3, message = "Project Value must be at least 3")
+  @Max(value = 199, message = "Project Value must not exceed 199")
   private int value;
 
   @Column

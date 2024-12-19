@@ -27,24 +27,23 @@ public class Users {
 
   @Column
   @NotBlank(message = "Name is required")
-  @Max(value = 199, message = "Name must be shorter than 199 characters")
+  @Size(max = 199, message = "Name must be shorter than 199 characters")
   private String name;
 
   @Column
-  @Email
+  @Email(message = "Email must be valid")
   @NotBlank(message = "Email is required")
-  @Max(value = 199, message = "Email must be shorter than 199 characters")
+  @Size(max = 199, message = "Email must be shorter than 199 characters")
   private String email;
 
   @Column
-  @Email
-  @Max(value = 199, message = "Email must be shorter than 199 characters")
+  @Email(message = "Email must be valid")
+  @Size(max = 199, message = "Email must be shorter than 199 characters")
   private String emailVerified;
 
   @Column
   @NotBlank(message = "Password is required")
-  @Min(value = 8, message = "Password must be longer than 8 characters")
-  @Max(value = 199, message = "Password must be shorter than 199 characters")
+  @Size(min = 8, max = 199, message = "Password must be between 8 and 199 characters")
   @Pattern(regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).*$", message = "Password must contain at least one uppercase letter, one number, and one special character")
   private String password;
 
