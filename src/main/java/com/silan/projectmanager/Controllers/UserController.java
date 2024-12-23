@@ -1,6 +1,7 @@
 package com.silan.projectmanager.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +16,7 @@ import com.silan.projectmanager.Model.Users;
 import com.silan.projectmanager.Repo.UserRepo;
 import com.silan.projectmanager.Services.SessionService;
 import com.silan.projectmanager.Services.UserService;
+import com.silan.projectmanager.Types.LoginResponse;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
@@ -36,7 +38,7 @@ public class UserController {
   // LOGIN
   @CrossOrigin(origins = "http://localhost:4200")
   @PostMapping(value = "/api/auth-login")
-  public ResponseEntity<Session> loginUser(@RequestBody Users users) {
+  public ResponseEntity<LoginResponse> loginUser(@RequestBody Users users) {
 
     Users user;
     String providedPassword = users.getPassword();
@@ -56,8 +58,16 @@ public class UserController {
     if (checkPassword.verified) {
       try {
         Session session = sessionService.sessionService(user);
-        System.out.println("Session created: " + session);
-        return new ResponseEntity<Session>(session, HttpStatus.OK);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", session.getToken());
+
+        LoginResponse response = new LoginResponse();
+        response.setId(user.getId());
+        response.setEmail(user.getEmail());
+        response.setName(user.getName());
+
+        return new ResponseEntity<LoginResponse>(response, headers, HttpStatus.OK);
       } catch (Exception ex) {
         System.err.println("Failed to create a session: " + ex.getMessage());
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create session");

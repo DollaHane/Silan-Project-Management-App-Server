@@ -63,6 +63,7 @@ public class SessionService {
         throw ex;
       }
     } else {
+      // TODO: Send email confirmation, there should not be a session in logged out state
       System.out.println("Returning current session");
       return session.get();
     }
