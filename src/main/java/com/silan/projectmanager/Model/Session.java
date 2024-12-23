@@ -1,34 +1,31 @@
 package com.silan.projectmanager.Model;
 
 import java.time.LocalDateTime;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.github.f4b6a3.ulid.Ulid;
-import com.github.f4b6a3.ulid.UlidCreator;
 
-import jakarta.persistence.CascadeType;
+// import org.hibernate.annotations.UuidGenerator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Future;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 
 @Entity
 @Table(name = "\"session\"")
 public class Session {
 
-  Ulid ulid = UlidCreator.getUlid();
 
   // ____________________________________
   // Models
 
   @Id
-  private Ulid id = ulid;
+  private String id;
 
   @Column
   @NotBlank(message = "User ID is required")
-  private Ulid userId;
+  private String userId;
 
   @Column
   @NotBlank(message = "Name is required")
@@ -44,30 +41,26 @@ public class Session {
   private String token;
 
   @Column
-  @NotBlank(message = "Expiration Date is required")
+  @NotNull(message = "Expiration Date is required")
+  @Future
   private LocalDateTime expiration;
-
-  // Child Relations
-  @OneToOne(mappedBy = "session", cascade = CascadeType.ALL)
-  @JsonManagedReference
-  private Users users;
 
   // ____________________________________
   // Getters & Setters
 
-  public Ulid getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Ulid id) {
+  public void setId(String id) {
     this.id = id;
   }
 
-  public Ulid getUserId() {
+  public String getUserId() {
     return userId;
   }
 
-  public void setUserId(Ulid userId) {
+  public void setUserId(String userId) {
     this.userId = userId;
   }
 
@@ -101,15 +94,6 @@ public class Session {
 
   public void setExpiration(LocalDateTime expiration) {
     this.expiration = expiration;
-  }
-
-  // 'user' (Child Relation)
-  public Users getUsers() {
-    return users;
-  }
-
-  public void setUsers(Users users) {
-    this.users = users;
   }
 
 }

@@ -3,8 +3,6 @@ package com.silan.projectmanager.Model;
 import com.silan.projectmanager.Types.Status.STATUS;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.github.f4b6a3.ulid.Ulid;
-import com.github.f4b6a3.ulid.UlidCreator;
 import com.silan.projectmanager.Types.Priority.PRIORITY;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,12 +21,11 @@ import jakarta.validation.constraints.*;
 @Table(name = "\"task\"")
 public class Task {
 
-  Ulid ulid = UlidCreator.getUlid();
 
   // _________________________________________________
   // Model
   @Id
-  private Ulid id = ulid;
+  private String id;
 
   @Column
   @NotBlank(message = "Title is required")
@@ -44,11 +41,13 @@ public class Task {
   private int progress;
 
   @Column
-  @NotBlank
+  @NotNull
+  @Future
   private LocalDateTime startDate;
 
   @Column
-  @NotBlank
+  @NotNull
+  @Future
   private LocalDateTime targetDate;
 
   @Column
@@ -77,11 +76,11 @@ public class Task {
   // _________________________________________________
   // Getters & Setters
 
-  public Ulid getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Ulid id) {
+  public void setId(String id) {
     this.id = id;
   }
 

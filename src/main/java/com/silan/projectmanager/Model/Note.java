@@ -3,8 +3,6 @@ package com.silan.projectmanager.Model;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.github.f4b6a3.ulid.Ulid;
-import com.github.f4b6a3.ulid.UlidCreator;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,12 +16,10 @@ import jakarta.validation.constraints.*;
 @Table(name = "\"note\"")
 public class Note {
 
-  Ulid ulid = UlidCreator.getUlid();
-
   // ___________________________________
   // Model
   @Id
-  private Ulid id = ulid;
+  private String id;
 
   @Column
   @NotBlank(message = "Note text is required")
@@ -50,11 +46,11 @@ public class Note {
   // _____________________________________________
   // Getters & Setters
 
-  public Ulid getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Ulid id) {
+  public void setId(String id) {
     this.id = id;
   }
 

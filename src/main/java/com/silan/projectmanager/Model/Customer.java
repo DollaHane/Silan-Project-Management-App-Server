@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.github.f4b6a3.ulid.Ulid;
-import com.github.f4b6a3.ulid.UlidCreator;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,13 +17,11 @@ import jakarta.validation.constraints.*;
 @Table(name = "\"customer\"")
 public class Customer {
 
-  Ulid ulid = UlidCreator.getUlid();
-
   // ____________________________________
   // Models
 
   @Id
-  private Ulid id = ulid;
+  private String id;
 
   @Column
   @NotBlank(message = "Company name is required")
@@ -81,11 +77,11 @@ public class Customer {
   // _______________________________________________________
   // Getters & Setters
 
-  public Ulid getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Ulid id) {
+  public void setId(String id) {
     this.id = id;
   }
 

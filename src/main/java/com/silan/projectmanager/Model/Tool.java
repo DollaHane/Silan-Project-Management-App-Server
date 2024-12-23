@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.github.f4b6a3.ulid.Ulid;
-import com.github.f4b6a3.ulid.UlidCreator;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -23,16 +21,15 @@ import jakarta.validation.constraints.Size;
 @Table(name = "\"tool\"")
 public class Tool {
 
-  Ulid ulid = UlidCreator.getUlid();
 
   // _________________________________________________
   // Model
   @Id
-  private Ulid id = ulid;
+  private String id;
 
   @Column
   @NotBlank
-  private Ulid projectParentId;
+  private String projectParentId;
 
   @Column
   @NotBlank(message = "Tool number is required")
@@ -73,19 +70,19 @@ public class Tool {
   // _________________________________________________
   // Getters & Setters
 
-  public Ulid getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Ulid id) {
+  public void setId(String id) {
     this.id = id;
   }
 
-  public Ulid getProjectParentId() {
+  public String getProjectParentId() {
     return projectParentId;
   }
 
-  public void setProjectParentId(Ulid projectParentId) {
+  public void setProjectParentId(String projectParentId) {
     this.projectParentId = projectParentId;
   }
 

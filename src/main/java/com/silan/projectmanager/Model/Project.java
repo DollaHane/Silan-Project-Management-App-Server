@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.github.f4b6a3.ulid.Ulid;
-import com.github.f4b6a3.ulid.UlidCreator;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -22,12 +20,10 @@ import jakarta.validation.constraints.*;
 @Table(name = "\"project\"")
 public class Project {
 
-  Ulid ulid = UlidCreator.getUlid();
-
   // _________________________________________________
   // Model
   @Id
-  private Ulid id = ulid;
+  private String id;
 
   @Column
   @NotBlank(message = "Title is required")
@@ -65,18 +61,18 @@ public class Project {
 
   // Parent Relations
   @ManyToOne
-  @JoinColumn(name = "customer_id", nullable = false)
+  @JoinColumn(name = "customer_id", nullable = true)
   @JsonBackReference
   private Customer customer;
 
   // _________________________________________________
   // Getters & Setters
 
-  public Ulid getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Ulid id) {
+  public void setId(String id) {
     this.id = id;
   }
 
@@ -144,6 +140,14 @@ public class Project {
 
   public void setTools(List<Tool> tools) {
     this.tools = tools;
+  }
+
+  public Customer getCustomer() {
+    return customer;
+  }
+
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
   }
 
 }

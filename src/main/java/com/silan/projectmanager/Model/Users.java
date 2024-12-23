@@ -2,15 +2,9 @@ package com.silan.projectmanager.Model;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.github.f4b6a3.ulid.Ulid;
-import com.github.f4b6a3.ulid.UlidCreator;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.*;
 
@@ -18,12 +12,10 @@ import jakarta.validation.constraints.*;
 @Table(name = "\"users\"")
 public class Users {
 
-  Ulid ulid = UlidCreator.getUlid();
-
   // Model
   @Id
   @NotBlank
-  private Ulid id = ulid;
+  private String id;
 
   @Column
   @NotBlank(message = "Name is required")
@@ -57,18 +49,12 @@ public class Users {
   @Column
   private LocalDateTime updatedAt;
 
-  // Parent Relations
-  @OneToOne
-  @JoinColumn(name = "session_id", nullable = false)
-  @JsonBackReference
-  private Session session;
-
   // Getters & Setters
-  public Ulid getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Ulid id) {
+  public void setId(String id) {
     this.id = id;
   }
 
@@ -128,11 +114,4 @@ public class Users {
     this.updatedAt = updatedAt;
   }
 
-  public Session getSession() {
-    return session;
-  }
-
-  public void setSession(Session session) {
-    this.session = session;
-  }
 }

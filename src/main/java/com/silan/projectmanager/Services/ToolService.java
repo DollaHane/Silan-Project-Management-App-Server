@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.silan.projectmanager.Repo.ProjectRepo;
 import com.silan.projectmanager.Repo.ToolRepo;
-import com.github.f4b6a3.ulid.Ulid;
 import com.silan.projectmanager.Model.Project;
 import com.silan.projectmanager.Model.Tool;
 
@@ -25,7 +24,7 @@ public class ToolService {
     return toolRepo.findAll();
   }
 
-  public Optional<Tool> getToolById(Ulid id) {
+  public Optional<Tool> getToolById(String id) {
     return toolRepo.findById(id);
   }
 
@@ -41,7 +40,7 @@ public class ToolService {
     return toolRepo.save(newTool);
   }
 
-  public Tool updateTool(Ulid id, Tool tool) {
+  public Tool updateTool(String id, Tool tool) {
     Project project = projectRepo.findById(tool.getProjectParentId())
         .orElseThrow(() -> new RuntimeException("Project not found"));
     Tool updatedTool = toolRepo.findById(id).get();
@@ -53,7 +52,7 @@ public class ToolService {
     return toolRepo.save(updatedTool);
   }
 
-  public void deleteTool(Ulid id) {
+  public void deleteTool(String id) {
     Tool deletedTool = toolRepo.findById(id).get();
     if (deletedTool == null) {
       throw new IllegalArgumentException("Invalid tool ID");

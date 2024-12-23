@@ -3,7 +3,6 @@ package com.silan.projectmanager.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.f4b6a3.ulid.Ulid;
 import com.silan.projectmanager.Model.Users;
 import com.silan.projectmanager.Repo.UserRepo;
 
@@ -38,7 +37,7 @@ public class UserService {
     return userRepo.save(newUser);
   }
 
-  public Users updateUser(Ulid id, Users users) {
+  public Users updateUser(String id, Users users) {
     Users updatedUser = userRepo.findById(id).get();
     updatedUser.setName(users.getName());
     updatedUser.setUpdatedAt(users.getUpdatedAt());
