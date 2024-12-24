@@ -1,16 +1,19 @@
 package com.silan.projectmanager.Types;
 
+import java.time.LocalDateTime;
+
 public class LoginResponse {
-  private String id;
+  private String userId;
   private String email;
   private String name;
+  private LocalDateTime expiration;
 
-  public String getId(){
-    return this.id;
+  public String getUserId(){
+    return this.userId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
   public String getEmail() {
@@ -27,6 +30,14 @@ public class LoginResponse {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public LocalDateTime getExpiration() {
+    return this.expiration;
+  }
+
+  public void setExpiration(LocalDateTime expiration) {
+    this.expiration = expiration;
   }
 
 }

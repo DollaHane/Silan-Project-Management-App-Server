@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,6 +19,7 @@ import com.silan.projectmanager.Types.LoginResponse;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
+// import java.net.http.HttpResponse;
 import java.util.Optional;
 
 @RestController
@@ -60,12 +60,14 @@ public class UserController {
         Session session = sessionService.sessionService(user);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", session.getToken());
+        headers.add("Auth-token", session.getToken());
+        headers.add("Auth-sessionId", session.getId());
 
         LoginResponse response = new LoginResponse();
-        response.setId(user.getId());
+        response.setUserId(user.getId());
         response.setEmail(user.getEmail());
         response.setName(user.getName());
+        response.setExpiration(session.getExpiration());
 
         return new ResponseEntity<LoginResponse>(response, headers, HttpStatus.OK);
       } catch (Exception ex) {
@@ -105,11 +107,7 @@ public class UserController {
 
   }
 
-  // UPDATE
-  @CrossOrigin(origins = "http://localhost:4200")
-  @PutMapping(value = "/api/update-users/{id}")
-  public ResponseEntity<Users> updateUser(String id, @RequestBody Users users) {
-    Users updatedUser = userService.updateUser(id, users);
-    return ResponseEntity.ok(updatedUser);
-  }
+  // _________________________________________________________________
+  // DELETE SESSION
+  
 }
