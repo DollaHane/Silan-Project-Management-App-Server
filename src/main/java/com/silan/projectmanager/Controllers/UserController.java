@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,13 +13,16 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.silan.projectmanager.Model.Session;
 import com.silan.projectmanager.Model.Users;
+import com.silan.projectmanager.Repo.SessionRepo;
 import com.silan.projectmanager.Repo.UserRepo;
 import com.silan.projectmanager.Services.SessionService;
 import com.silan.projectmanager.Services.UserService;
 import com.silan.projectmanager.Types.LoginResponse;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import jakarta.servlet.http.HttpServletRequest;
 
+// import java.net.http.HttpRequest;
 // import java.net.http.HttpResponse;
 import java.util.Optional;
 
@@ -33,6 +37,9 @@ public class UserController {
 
   @Autowired
   private UserRepo userRepo;
+
+  @Autowired
+  private SessionRepo sessionRepo;
 
   // ________________________________________________________________
   // LOGIN
@@ -51,7 +58,7 @@ public class UserController {
       userPassword = user.getPassword();
       checkPassword = passwordCheck(userPassword, providedPassword);
     } catch (Exception ex) {
-      System.out.println("Email does not exist: " + ex.getMessage());
+      System.out.println("Email does not exist: ERR - " + ex.getMessage() + ex.getCause());
       throw new ResponseStatusException(HttpStatus.CONFLICT, "Email does not exist");
     }
 
@@ -71,7 +78,7 @@ public class UserController {
 
         return new ResponseEntity<LoginResponse>(response, headers, HttpStatus.OK);
       } catch (Exception ex) {
-        System.err.println("Failed to create a session: " + ex.getMessage());
+        System.err.println("Failed to create a session: ERR - " + ex.getMessage() + ex.getCause());
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create session");
       }
     } else {
@@ -101,7 +108,7 @@ public class UserController {
       System.out.println("User registration success");
       return new ResponseEntity<>(registeredUser, HttpStatus.OK);
     } catch (Exception ex) {
-      System.err.println("Failed to register user: ERR - " + ex.getMessage());
+      System.err.println("Failed to register user: ERR - " + ex.getMessage() + ex.getCause());
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to register user.");
     }
 
@@ -109,5 +116,31 @@ public class UserController {
 
   // _________________________________________________________________
   // DELETE SESSION
-  
+  @CrossOrigin(origins = "http://localhost:4200")
+  @DeleteMapping(path = "api/auth-rm-session")
+  private ResponseEntity<String> DeleteSession(HttpServletRequest request) {
+    String token = request.getHeader("auth-token");
+    String sessionId = request.getHeader("auth-sessionId");
+    Optional<Session> getSession = sessionRepo.findById(sessionId);
+
+    System.out.println("Request Headers: " + token + " " + sessionId);
+
+    try {
+
+      if (token.isEmpty()) {
+        System.err.println("Session not present in request headers");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Session token not present in request headers");
+      }
+
+      if (getSession.isPresent()) {
+        Session session = getSession.get();
+        sessionRepo.delete(session);
+      }
+    } catch (Exception ex) {
+      System.err.println("Failed to delete session: ERR - ." + ex.getMessage() + ex.getCause());
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete session");
+    }
+
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
 }
