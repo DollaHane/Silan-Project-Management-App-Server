@@ -119,8 +119,8 @@ public class UserController {
   @CrossOrigin(origins = "http://localhost:4200")
   @DeleteMapping(path = "api/auth-rm-session")
   private ResponseEntity<String> DeleteSession(HttpServletRequest request) {
-    String token = request.getHeader("auth-token");
-    String sessionId = request.getHeader("auth-sessionId");
+    String token = request.getHeader("Auth-token");
+    String sessionId = request.getHeader("Auth-sessionId");
     Optional<Session> getSession = sessionRepo.findById(sessionId);
 
     System.out.println("Request Headers: " + token + " " + sessionId);

@@ -9,7 +9,7 @@ import org.springframework.lang.NonNull;
 public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(@NonNull CorsRegistry registry) {
-    registry.addMapping("/api/**") // Adjust the path as needed
+    registry.addMapping("/**") // Adjust the path as needed
         .allowedOrigins("http://localhost:4200") // Allow your frontend origin
         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Specify allowed methods
         .allowedHeaders("*") // Allow any headers
